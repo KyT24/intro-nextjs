@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { LoginRequest } from '../validation/loginSchema';
 import { loginApi } from '@/api/auth/loginApi';
 import { useRouter } from 'next/navigation';
-import { isAxiosError } from 'axios';
+import axios from 'axios';
 
 export function useLoginMutation(
   getValues: () => LoginRequest,
@@ -19,13 +19,13 @@ export function useLoginMutation(
       router.push('/');
     },
     onError: (error) => {
-      console.log(error);
-      if (isAxiosError(error)) {
-        toast.error(error?.response?.data?.message || 'Invalid email or password');
-      } else {
-        toast.error('Something went wrong');
-      }
-    },
+  console.log(error);
+  if (axios.isAxiosError(error)) {
+    toast.error(error?.response?.data?.message || 'Invalid email or password');
+  } else {
+    toast.error('Something went wrong');
+  }
+},
   });
 
   return {
